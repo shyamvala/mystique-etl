@@ -1,0 +1,48 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://example.org/ord"
+            xmlns="http://example.org/ord">
+  <xs:element name="order" type="OrderType"/>
+  <xs:complexType name="OrderType">
+    <xs:sequence>
+      <xs:element name="number" type="OrderNumType"/>
+      <xs:element name="customer" type="CustomerType"/>
+      <xs:element name="items" type="ItemsType"/>
+    </xs:sequence>
+  </xs:complexType>
+   <xs:complexType name="CustomerType">
+    <xs:sequence>
+      <xs:element name="name" type="CustNameType"/>
+      <xs:element name="number" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CustNameType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="OrderNumType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="ItemsType">
+    <xs:sequence>
+      <xs:element name="product" type="ProductType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductType">
+    <xs:sequence>
+      <xs:element name="number" type="xs:integer"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="size" type="SizeType"/>
+      <xs:element name="color" type="ColorType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SizeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:integer">
+        <xs:attribute name="system" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ColorType">
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+</xs:schema>
+
