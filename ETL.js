@@ -17,8 +17,18 @@ class ETL {
     return this;
   }
 
+  validateTransformFunction(transformFunction) {
+    return true;
+  }
+
+  withTransformFunction(transformFunction) {
+    validateTransformFunction(transformFunction);
+    this.transformFunction = transformFunction;
+    return this;
+  }
+
   run() {
-    return DI.ETLJobRun.instance(this.jobConfig, this.jobName).run();
+    return DI.ETLJobRun.instance(this.jobConfig, this.jobName, this.transformFunction).run();
   }
 
   events() {

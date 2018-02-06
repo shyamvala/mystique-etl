@@ -12,10 +12,10 @@ describe("Dependency Injection", () => {
   });
 
   it("should return instance of CustomTransformer", () => {
-    let transformer = DI.Transformer.instance({type: "custom", transformFunction: "some_function_file"}, "12345");
+    let transformer = DI.Transformer.instance({type: "custom"}, "12345", "some_function");
 
     expect(transformer).to.be.a('CustomTransformer');
-    expect(transformer.transformFunction).to.equal("some_function_file");
+    expect(transformer.transformFunction).to.equal("some_function");
   });
 
   it("should return instance of XSDValidator", () => {
@@ -42,8 +42,7 @@ describe("Dependency Injection", () => {
         headers: {}
       },
       transform: {
-        type: "custom",
-        file: "OrdersJsonToXML"
+        type: "custom"
       },
       validate: {
         type: "XSD",
