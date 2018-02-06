@@ -1,5 +1,5 @@
-const DI = require("../src/di")();
-const AppEvents = require('../src/AppEvents');
+const DI = require("./src/di")();
+const AppEvents = require('./src/AppEvents');
 
 class ETL {
 
