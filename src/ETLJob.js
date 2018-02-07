@@ -1,12 +1,12 @@
-class ETVLJob {
+class ETLJob {
 
   withExtractor(extractor) {
     this.extractor = extractor;
     return this;
   }
 
-  withTransformer(transformer) {
-    this.transformer = transformer;
+  withTransformers(transformers) {
+    this.transformers = transformers;
     return this;
   }
 
@@ -29,12 +29,16 @@ class ETVLJob {
     });
   }
 
+  resolveMultipleTransformers(transformers, data) {
+     return transformers.reduce((prev, curr) => prev.then(curr.transform), Promise.resolve(data));
+  }
+
   run() {
     return this.validateForRun()
       .then(() => this.extractor.fetch())
-      .then((data) => this.transformer.transform(data))
+      .then((data) => this.resolveMultipleTransformers(this.transformers, data))
       .then((transformedData) => this.validator.validate(transformedData))
-      .then((transformedData) => this.loader.load(transformedData))
+      .then((validatedData) => this.loader.load(validatedData))
       .catch(error => {
         console.log(error);
         return error;
@@ -42,5 +46,5 @@ class ETVLJob {
   }
 }
 
-module.exports = ETVLJob;
+module.exports = ETLJob;
 

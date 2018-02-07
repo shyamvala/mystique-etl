@@ -4,14 +4,14 @@ const Extractors = require('./extract');
 const Transformers = require('./transform');
 const Validators = require('./validate');
 const Loaders = require('./load');
+const _ = require('lodash');
 
 const Extractor = function(container, config, jobId) {
   let ExtractorType = Extractors[config.type];
   return new ExtractorType(config, jobId);
 };
 const Transformer = function(container, config, jobId, transformFunction) {
-  let TransformerType = Transformers[config.type];
-  return new TransformerType(config, jobId, transformFunction);
+  return _.map(_.uniq(_.split(config.type, ";")), (type) => new Transformers[type](config, jobId, transformFunction));
 };
 const Validator = function(container, config, jobId) {
   let ValidatorType = Validators[config.type];
@@ -25,7 +25,7 @@ const Loader = function(container, config, jobId) {
 const ETLJobRun = function(container, config, jobId, transformFunction) {
     return new ETLJob()
       .withExtractor(container.Extractor.instance(config.extract, jobId))
-      .withTransformer(container.Transformer.instance(config.transform, jobId, transformFunction))
+      .withTransformers(container.Transformer.instance(config.transform, jobId, transformFunction))
       .withValidator(container.Validator.instance(config.validate, jobId))
       .withLoader(container.Loader.instance(config.load, jobId));
 }

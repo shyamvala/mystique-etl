@@ -47,6 +47,18 @@ describe("application events", () => {
     expect(AppEvents.NO_OP_TRANSFORM_SUCCESSFUL).to.equal('no-op-transform-successful');
   });
 
+  it("should have an event for Requested XML2JS Transform event", () => {
+    expect(AppEvents.XML2JS_TRANSFORM_REQUESTED).to.equal('xml2js-transform-requested');
+  });
+
+  it("should have an event for Successful XML2JS Transform event", () => {
+    expect(AppEvents.XML2JS_TRANSFORM_SUCCESSFUL).to.equal('xml2js-transform-successful');
+  });
+
+  it("should have an event for Failed XML2JS Transform event", () => {
+    expect(AppEvents.XML2JS_TRANSFORM_FAILED).to.equal('xml2js-transform-failed');
+  });
+
   it("should have an event for Requested Custom Transform event", () => {
     expect(AppEvents.CUSTOM_TRANSFORM_REQUESTED).to.equal('custom-transform-requested');
   });

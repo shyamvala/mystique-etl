@@ -14,8 +14,17 @@ describe("Dependency Injection", () => {
   it("should return instance of CustomTransformer", () => {
     let transformer = DI.Transformer.instance({type: "custom"}, "12345", "some_function");
 
-    expect(transformer).to.be.a('CustomTransformer');
-    expect(transformer.transformFunction).to.equal("some_function");
+    expect(transformer).to.be.a('array');
+    expect(transformer[0]).to.be.a('CustomTransformer');
+    expect(transformer[0].transformFunction).to.equal("some_function");
+  });
+
+  it("should return multiple transformers when type is comma seperated list of types", () => {
+    let transformers = DI.Transformer.instance({type: "xml2js;custom"}, "12345", "some_function");
+
+    expect(transformers).to.be.a('array');
+    expect(transformers[0]).to.be.a("XML2JSTransformer");
+    expect(transformers[1]).to.be.a("CustomTransformer");
   });
 
   it("should return instance of XSDValidator", () => {
@@ -59,7 +68,41 @@ describe("Dependency Injection", () => {
     let etlJobRun = DI.ETLJobRun.instance(config, "12345");
 
     expect(etlJobRun.extractor).to.be.a('HTTPJSONSource');
-    expect(etlJobRun.transformer).to.be.a('CustomTransformer');
+    expect(etlJobRun.transformers).to.be.a('array');
+    expect(etlJobRun.transformers[0]).to.be.a('CustomTransformer');
+    expect(etlJobRun.validator).to.be.a('XSDValidator');
+    expect(etlJobRun.loader).to.be.a('S3Uploader');
+  });
+
+  it("should return instance of ETVL Job Run with Multiple Transformers", () => {
+    let config = {
+      name: "awesomejob",
+      extract: {
+        url: "http://extract.from.com/feed",
+        type: "http_json",
+        headers: {}
+      },
+      transform: {
+        type: "xml2js;custom"
+      },
+      validate: {
+        type: "xsd",
+        schema: "schema.xsd"
+      },
+      load: {
+        type: "s3",
+        bucketName: "plasticBucket",
+        fileName: "water",
+        credentials: { secret:"secretString", key: "keyString" }
+      }
+    };
+
+    let etlJobRun = DI.ETLJobRun.instance(config, "12345");
+
+    expect(etlJobRun.extractor).to.be.a('HTTPJSONSource');
+    expect(etlJobRun.transformers).to.be.a('array');
+    expect(etlJobRun.transformers[0]).to.be.a('XML2JSTransformer');
+    expect(etlJobRun.transformers[1]).to.be.a('CustomTransformer');
     expect(etlJobRun.validator).to.be.a('XSDValidator');
     expect(etlJobRun.loader).to.be.a('S3Uploader');
   });
