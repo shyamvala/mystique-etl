@@ -1,9 +1,9 @@
 const ETL = require('../');
 
-const HttpJSONExtractJobConfig = {
+const HttpXMLExtractJobConfig = {
   extract: {
-    type: "http_json",
-    url: "https://dog.ceo/api/breeds/list/all"
+    type: "http_xml",
+    url: "http://w1.weather.gov/xml/current_obs/KEWR.xml"
   },
   transform: {
     type: "no_op",
@@ -30,7 +30,7 @@ const lifeCycleListener = {
   }
 };
 
-new ETL("SimpleJob")
-  .withJobConfig(HttpJSONExtractJobConfig)
+new ETL("HttpXMLJob")
+  .withJobConfig(HttpXMLExtractJobConfig)
   .withETLLifeCycleEventListener(lifeCycleListener)
   .run()

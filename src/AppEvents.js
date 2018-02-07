@@ -13,6 +13,9 @@ appEvents.INPUT_DATA_EXTRACT_SUCCESSFUL = 'input-data-extract-successful';
 appEvents.HTTP_JSON_EXTRACT_REQUESTED = 'http-json-extract-requested';
 appEvents.HTTP_JSON_EXTRACT_SUCCESSFUL = 'http-json-extract-successful';
 appEvents.HTTP_JSON_EXTRACT_FAILED = 'http-json-extract-failed';
+appEvents.HTTP_XML_EXTRACT_REQUESTED = 'http-xml-extract-requested';
+appEvents.HTTP_XML_EXTRACT_SUCCESSFUL = 'http-xml-extract-successful';
+appEvents.HTTP_XML_EXTRACT_FAILED = 'http-xml-extract-failed';
 
 appEvents.NO_OP_TRANSFORM_REQUESTED = 'no-op-transform-requested';
 appEvents.NO_OP_TRANSFORM_SUCCESSFUL = 'no-op-transform-successful';
@@ -35,6 +38,7 @@ appEvents.S3_UPLOAD_FAILED = 's3-upload-failed';
 const REQUEST_EVENTS = [
   appEvents.INPUT_DATA_EXTRACT_REQUESTED,
   appEvents.HTTP_JSON_EXTRACT_REQUESTED,
+  appEvents.HTTP_XML_EXTRACT_REQUESTED,
   appEvents.CUSTOM_TRANSFORM_REQUESTED,
   appEvents.NO_OP_VALIDATION_REQUESTED,
   appEvents.XSD_VALIDATION_REQUESTED,
@@ -45,6 +49,7 @@ const REQUEST_EVENTS = [
 const SUCCESS_EVENTS = [
   appEvents.INPUT_DATA_EXTRACT_SUCCESSFUL,
   appEvents.HTTP_JSON_EXTRACT_SUCCESSFUL,
+  appEvents.HTTP_XML_EXTRACT_SUCCESSFUL,
   appEvents.CUSTOM_TRANSFORM_SUCCESSFUL,
   appEvents.NO_OP_VALIDATION_SUCCESSFUL,
   appEvents.XSD_VALIDATION_SUCCESSFUL,
@@ -54,6 +59,7 @@ const SUCCESS_EVENTS = [
 
 const FAILURE_EVENTS = [
   appEvents.HTTP_JSON_EXTRACT_FAILED,
+  appEvents.HTTP_XML_EXTRACT_FAILED,
   appEvents.CUSTOM_TRANSFORM_FAILED,
   appEvents.XSD_VALIDATION_FAILED,
   appEvents.S3_UPLOAD_FAILED,

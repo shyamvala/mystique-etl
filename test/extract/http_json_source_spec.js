@@ -17,7 +17,7 @@ describe('Extract from HTTP', () => {
       let response = {"body":{"response": true }, "status": 200 };
       getRequest.returns(Promise.resolve(response));
 
-      new HTTPJSONSource({url: "http://extract.from.com/feed"}, "12345").fetch()
+      new HTTPJSONSource({type:"http_json", url: "http://extract.from.com/feed"}, "12345").fetch()
 
       expect(getRequest).to.have.been.calledWith("http://extract.from.com/feed");
     });
@@ -26,7 +26,7 @@ describe('Extract from HTTP', () => {
       let response = {"body":{"response": true }, "status": 200 };
       getRequest.returns(Promise.resolve(response));
 
-      new HTTPJSONSource({url: "http://extract.from.com/feed"}, "12345")
+      new HTTPJSONSource({type:"http_json", url: "http://extract.from.com/feed"}, "12345")
         .fetch()
         .then(data => {
           expect(data.response).to.be.true;
@@ -40,7 +40,7 @@ describe('Extract from HTTP', () => {
       let eventSpy = sinon.spy();
       AppEvents.on(AppEvents.HTTP_JSON_EXTRACT_SUCCESSFUL, eventSpy);
 
-      new HTTPJSONSource({url: "http://extract.from.com/feed"}, "12345")
+      new HTTPJSONSource({type:"http_json", url: "http://extract.from.com/feed"}, "12345")
         .fetch()
         .then(() => {
           expect(eventSpy).to.have.been.calledWith("12345")
@@ -55,7 +55,7 @@ describe('Extract from HTTP', () => {
       let eventSpy = sinon.spy();
       AppEvents.on(AppEvents.HTTP_JSON_EXTRACT_FAILED, eventSpy);
 
-      new HTTPJSONSource({url: "http://extract.from.com/feed"}, "12345")
+      new HTTPJSONSource({type:"http_json", url: "http://extract.from.com/feed"}, "12345")
         .fetch()
         .catch(() => {
           expect(eventSpy).to.have.been.calledWith("12345")

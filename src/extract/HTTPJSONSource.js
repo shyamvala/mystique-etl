@@ -13,7 +13,8 @@ class HTTPJSONSource {
   fetch() {
     this.logger(`Fetching Data from URL: ${this.url}`);
     AppEvents.emit(AppEvents.HTTP_JSON_EXTRACT_REQUESTED, this.jobId);
-    return request.get(this.url)
+    return request
+      .get(this.url)
       .then((res) => {
         this.logger(`Fetched Data`);
         AppEvents.emit(AppEvents.HTTP_JSON_EXTRACT_SUCCESSFUL, this.jobId);
