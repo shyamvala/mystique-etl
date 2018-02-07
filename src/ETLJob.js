@@ -22,7 +22,7 @@ class ETVLJob {
 
   validateForRun() {
     return new Promise((resolve, reject) => {
-      if(!extractor) {
+      if(!this.extractor) {
         return reject("No Extractor configured");
       }
       return resolve(true);
@@ -35,6 +35,10 @@ class ETVLJob {
       .then((data) => this.transformer.transform(data))
       .then((transformedData) => this.validator.validate(transformedData))
       .then((transformedData) => this.loader.load(transformedData))
+      .catch(error => {
+        console.log(error);
+        return error;
+      })
   }
 }
 

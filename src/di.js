@@ -6,16 +6,20 @@ const Validators = require('./validate');
 const Loaders = require('./load');
 
 const Extractor = function(container, config, jobId) {
-  return new Extractors[config.type](config, jobId);
+  let ExtractorType = Extractors[config.type];
+  return new ExtractorType(config, jobId);
 };
 const Transformer = function(container, config, jobId, transformFunction) {
-  return new Transformers[config.type](config, jobId, transformFunction);
+  let TransformerType = Transformers[config.type];
+  return new TransformerType(config, jobId, transformFunction);
 };
 const Validator = function(container, config, jobId) {
-  return new Validators[config.type](config, jobId);
+  let ValidatorType = Validators[config.type];
+  return new ValidatorType(config, jobId);
 };
 const Loader = function(container, config, jobId) {
-  return new Loaders[config.type](config, jobId);
+  let LoaderType = Loaders[config.type];
+  return new LoaderType(config, jobId);
 }
 
 const ETLJobRun = function(container, config, jobId, transformFunction) {

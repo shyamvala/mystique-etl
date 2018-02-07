@@ -1,5 +1,7 @@
 const CustomTransformer = require('./CustomTransformer');
+const NoOpTransformer = require('./NoOpTransformer');
 
 module.exports = {
-  custom: CustomTransformer
+  custom: CustomTransformer,
+  no_op: NoOpTransformer
 }

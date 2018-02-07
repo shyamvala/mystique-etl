@@ -1,7 +1,9 @@
 const XSDValidator = require('./XSDValidator');
+const NoOpValidator = require('./NoOpValidator');
 
 module.exports = {
 
-  XSD: XSDValidator
+  xsd: XSDValidator,
+  no_op: NoOpValidator
 
 };

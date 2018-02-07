@@ -7,7 +7,7 @@ class HTTPJSONSource {
   constructor(config, jobId) {
     this.url = config.url;
     this.jobId = jobId;
-    this.logger = logger(`app:extract:http_json_source:job:${jobId}`);
+    this.logger = logger(`app:extract:${config.type}:job:${jobId}`);
   }
 
   fetch() {

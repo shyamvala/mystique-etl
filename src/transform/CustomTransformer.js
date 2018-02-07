@@ -6,7 +6,7 @@ class CustomTransformer {
   constructor(config, jobId, transformFunction) {
     this.transformFunction = transformFunction;
     this.jobId = jobId;
-    this.logger = logger(`app:transform:custom:job:${jobId}`);
+    this.logger = logger(`app:transform:${config.type}:job:${jobId}`);
   }
 
   transform(data) {

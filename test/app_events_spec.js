@@ -50,4 +50,36 @@ describe("application events", () => {
   it("should have an event for Failed S3 Upload event", () => {
     expect(AppEvents.S3_UPLOAD_FAILED).to.equal('s3-upload-failed');
   });
+
+  it("should have an event for Extract Requested event for Input Data", () => {
+    expect(AppEvents.INPUT_DATA_EXTRACT_REQUESTED).to.equal('input-data-extract-requested');
+  });
+
+  it("should have an event for Extract Successful event for Input Data", () => {
+    expect(AppEvents.INPUT_DATA_EXTRACT_SUCCESSFUL).to.equal('input-data-extract-successful');
+  });
+
+  it("should have an event for Requested No Op Transform event", () => {
+    expect(AppEvents.NO_OP_TRANSFORM_REQUESTED).to.equal('no-op-transform-requested');
+  });
+
+  it("should have an event for Successful No Op Transform event", () => {
+    expect(AppEvents.NO_OP_TRANSFORM_SUCCESSFUL).to.equal('no-op-transform-successful');
+  });
+
+  it("should have an event for Requested No Op Validation event", () => {
+    expect(AppEvents.NO_OP_VALIDATION_REQUESTED).to.equal('no-op-validation-requested');
+  });
+
+  it("should have an event for Successful No Op Validation event", () => {
+    expect(AppEvents.NO_OP_VALIDATION_SUCCESSFUL).to.equal('no-op-validation-successful');
+  });
+
+  it("should have an event for Requested Std Out Load event", () => {
+    expect(AppEvents.STD_OUT_LOAD_REQUESTED).to.equal('std-out-load-requested');
+  });
+
+  it("should have an event for Successful Std Out Load event", () => {
+    expect(AppEvents.STD_OUT_LOAD_SUCCESSFUL).to.equal('std-out-load-successful');
+  });
 })

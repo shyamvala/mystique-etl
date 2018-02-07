@@ -29,7 +29,7 @@ class S3Uploader {
       };
 
       let objectData = { Bucket: this.bucketName, Key: this.fileName, Body: data };
-      s3.putObject(objectData, (err, data) => {
+      s3.putObject(objectData, (err, responseData) => {
         err ? failed(err) : success(data);
       });
     });

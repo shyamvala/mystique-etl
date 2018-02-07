@@ -12,7 +12,7 @@ class ETL {
   }
 
   withJobConfig(config) {
-    validateJobConfig(config);
+    this.validateJobConfig(config);
     this.jobConfig = config;
     return this;
   }
@@ -22,18 +22,21 @@ class ETL {
   }
 
   withTransformFunction(transformFunction) {
-    validateTransformFunction(transformFunction);
+    this.validateTransformFunction(transformFunction);
     this.transformFunction = transformFunction;
     return this;
   }
 
+  withETLLifeCycleEventListener(lifeCycleListener) {
+    this.lifeCycleListener = lifeCycleListener;
+    return this;
+  }
+
   run() {
+    AppEvents.registerEventsToLifeCycleListener(this.lifeCycleListener);
     return DI.ETLJobRun.instance(this.jobConfig, this.jobName, this.transformFunction).run();
   }
 
-  events() {
-    return AppEvents;
-  }
 }
 
 module.exports = ETL;

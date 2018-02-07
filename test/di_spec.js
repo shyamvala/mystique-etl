@@ -19,7 +19,7 @@ describe("Dependency Injection", () => {
   });
 
   it("should return instance of XSDValidator", () => {
-    let validator = DI.Validator.instance({type: "XSD", schema: "blah.xsd"}, "12345");
+    let validator = DI.Validator.instance({type: "xsd", schema: "blah.xsd"}, "12345");
 
     expect(validator).to.be.a('XSDValidator');
     expect(validator.schemaFileLocation).to.equal("blah.xsd");
@@ -45,7 +45,7 @@ describe("Dependency Injection", () => {
         type: "custom"
       },
       validate: {
-        type: "XSD",
+        type: "xsd",
         schema: "schema.xsd"
       },
       load: {

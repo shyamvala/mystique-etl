@@ -7,7 +7,7 @@ class XSDValidator {
   constructor(config, jobId) {
     this.schemaFileLocation = config.schema;
     this.jobId = jobId;
-    this.logger = logger(`app:validate:xsd:job:${jobId}`);
+    this.logger = logger(`app:validate:${config.type}:job:${jobId}`);
   }
 
 
