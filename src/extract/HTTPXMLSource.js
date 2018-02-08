@@ -5,6 +5,7 @@ const AppEvents = require('../AppEvents');
 class HTTPXMLSource {
 
   constructor(config, jobId) {
+    this.name = config.name;
     this.url = config.url;
     this.jobId = jobId;
     this.logger = logger(`app:extract:${config.type}:job:${jobId}`);
@@ -25,6 +26,10 @@ class HTTPXMLSource {
         AppEvents.emit(AppEvents.HTTP_XML_EXTRACT_FAILED, this.jobId);
         return Promise.reject(err);
       });
+  }
+
+  get [Symbol.toStringTag]() {
+    return 'HTTPXMLSource';
   }
 }
 

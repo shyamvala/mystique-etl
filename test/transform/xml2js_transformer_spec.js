@@ -9,10 +9,10 @@ describe("XML to JS Transform Data", () => {
 
   describe("on success", () => {
     it("should return transformed data", (done) => {
-      new XML2JSTransformer({type: "xml2js"}, "12345")
-        .transform("<blah>blue</blah>")
+      new XML2JSTransformer({type: "xml2js", element: "key"}, "12345")
+        .transform({ key: "<blah>blue</blah>" })
         .then((transformedData) => {
-          expect(transformedData.blah).to.equal("blue");
+          expect(transformedData["key"].blah).to.equal("blue");
           done();
         })
     });
@@ -23,8 +23,8 @@ describe("XML to JS Transform Data", () => {
       AppEvents.on(AppEvents.XML2JS_TRANSFORM_SUCCESSFUL, eventSpy);
       let transformFunction = (data, success, err) => { success("transformed data"); } ;
 
-      new XML2JSTransformer({type: "xml2js"}, "12345")
-        .transform("<blah>blue</blah>")
+      new XML2JSTransformer({type: "xml2js", element: "key"}, "12345")
+        .transform({key: "<blah>blue</blah>"})
         .then((transformedData) => {
           expect(eventSpy).to.have.been.calledWith("12345")
           done();
@@ -37,8 +37,8 @@ describe("XML to JS Transform Data", () => {
       let eventSpy = sinon.spy();
       AppEvents.on(AppEvents.XML2JS_TRANSFORM_FAILED, eventSpy);
 
-      new XML2JSTransformer({type: "xml2js"}, "12345")
-        .transform("invalid_xml_content")
+      new XML2JSTransformer({type: "xml2js", element: "key"}, "12345")
+        .transform({key: "invalid_xml_content"})
         .catch(() => {
           expect(eventSpy).to.have.been.calledWith("12345")
           done();

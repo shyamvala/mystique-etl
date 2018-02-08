@@ -1,19 +1,14 @@
 const ETL = require('../');
 
 const HttpJSONExtractJobConfig = {
-  extract: {
+  extract: [{
+    name: "dogs",
     type: "http_json",
     url: "https://dog.ceo/api/breeds/list/all"
-  },
-  transform: {
-    type: "no_op",
-  },
-  validate: {
-    type: "no_op"
-  },
-  load: {
-    type: "std_out"
-  }
+  }],
+  transform: [{ type: "no_op" }],
+  validate: { type: "no_op" },
+  load: [{ type: "std_out" }]
 };
 
 const lifeCycleListener = {

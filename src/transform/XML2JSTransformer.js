@@ -6,7 +6,8 @@ class XML2JSTransformer {
 
   constructor(config, jobId) {
     this.jobId = jobId;
-    this.logger = logger(`app:transform:xml2js:job:${jobId}`);
+    this.element = config.element;
+    this.logger = logger(`app:transform:${config.type}:job:${jobId}`);
   }
 
   transform(data) {
@@ -25,9 +26,11 @@ class XML2JSTransformer {
         reject(error);
       };
 
-      parseXMLString(data, (err, result) => {
+      parseXMLString(data[this.element], (err, result) => {
         if(err) return failure(err);
-        return success(result);
+        let transformedData = data;
+        transformedData[this.element] = result;
+        return success(transformedData);
       });
     });
   }

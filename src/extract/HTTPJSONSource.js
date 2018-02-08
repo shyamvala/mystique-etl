@@ -5,6 +5,7 @@ const AppEvents = require('../AppEvents');
 class HTTPJSONSource {
 
   constructor(config, jobId) {
+    this.name = config.name;
     this.url = config.url;
     this.jobId = jobId;
     this.logger = logger(`app:extract:${config.type}:job:${jobId}`);

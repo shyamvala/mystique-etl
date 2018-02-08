@@ -1,19 +1,14 @@
 const ETL = require('../');
 
 const SimpleJobConfig = {
-  extract: {
+  extract: [{
+    name: "input",
     type: "input_data",
     data: "Some Input Data"
-  },
-  transform: {
-    type: "no_op",
-  },
-  validate: {
-    type: "no_op"
-  },
-  load: {
-    type: "std_out"
-  }
+  }],
+  transform: [{ type: "no_op" }],
+  validate: { type: "no_op" },
+  load: [{ type: "std_out" }]
 };
 
 const lifeCycleListener = {

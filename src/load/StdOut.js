@@ -18,6 +18,10 @@ class StdOut {
       return resolve(data);
     });
   }
+
+  get [Symbol.toStringTag]() {
+    return 'Stdout';
+  }
 }
 
 module.exports = StdOut;

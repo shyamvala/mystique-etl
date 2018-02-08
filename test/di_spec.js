@@ -3,24 +3,37 @@ const DI = require('../src/di')();
 
 describe("Dependency Injection", () => {
 
-  it("should return instance of HTTPJSONSource Extractor", () => {
-    let extractor = DI.Extractor.instance({type: "http_json", url: "blah.com"}, "12345");
+  it("should return single extractor", () => {
+    let extractors = DI.Extractors.instance([{type: "http_json", url: "blah.com"}], "12345");
 
-    expect(extractor).to.be.a('HTTPJSONSource');
-    expect(extractor.url).to.equal('blah.com');
-    expect(extractor.jobId).to.equal('12345');
+    expect(extractors).to.be.a('array');
+    expect(extractors[0]).to.be.a('HTTPJSONSource');
+    expect(extractors[0].url).to.equal('blah.com');
+    expect(extractors[0].jobId).to.equal('12345');
+  });
+
+  it("should return multiple extractors", () => {
+    let extractors = DI.Extractors.instance([{type: "http_json", url: "blah.com"}, {type: "http_xml", url: "blue.com"}], "12345");
+
+    expect(extractors).to.be.a('array');
+    expect(extractors[0]).to.be.a('HTTPJSONSource');
+    expect(extractors[0].url).to.equal('blah.com');
+    expect(extractors[0].jobId).to.equal('12345');
+    expect(extractors[1]).to.be.a('HTTPXMLSource');
+    expect(extractors[1].url).to.equal('blue.com');
+    expect(extractors[1].jobId).to.equal('12345');
   });
 
   it("should return instance of CustomTransformer", () => {
-    let transformer = DI.Transformer.instance({type: "custom"}, "12345", "some_function");
+    let transformers = DI.Transformers.instance([{type: "custom"}], "12345", "some_function");
 
-    expect(transformer).to.be.a('array');
-    expect(transformer[0]).to.be.a('CustomTransformer');
-    expect(transformer[0].transformFunction).to.equal("some_function");
+    expect(transformers).to.be.a('array');
+    expect(transformers[0]).to.be.a('CustomTransformer');
+    expect(transformers[0].transformFunction).to.equal("some_function");
   });
 
   it("should return multiple transformers when type is comma seperated list of types", () => {
-    let transformers = DI.Transformer.instance({type: "xml2js;custom"}, "12345", "some_function");
+    let transformers = DI.Transformers.instance([{type: "xml2js"}, {type: "custom"}], "12345", "some_function");
 
     expect(transformers).to.be.a('array');
     expect(transformers[0]).to.be.a("XML2JSTransformer");
@@ -34,76 +47,95 @@ describe("Dependency Injection", () => {
     expect(validator.schemaFileLocation).to.equal("blah.xsd");
   });
 
-  it("should return instance of S3Uploader", () => {
-    let loader = DI.Loader.instance({type: "s3", bucketName: "blah", fileName: "bleh"}, "12345");
+  it("should return single loader", () => {
+    let loaders = DI.Loaders.instance([{type: "s3", bucketName: "blah", fileName: "bleh"}], "12345");
 
-    expect(loader).to.be.a('S3Uploader');
-    expect(loader.bucketName).to.equal("blah");
-    expect(loader.fileName).to.equal("bleh");
+    expect(loaders).to.be.a('array');
+    expect(loaders[0]).to.be.a('S3Uploader');
+    expect(loaders[0].bucketName).to.equal("blah");
+    expect(loaders[0].fileName).to.equal("bleh");
+  });
+
+  it("should return multiple loaders", () => {
+    let loaders = DI.Loaders.instance([{type: "s3", bucketName: "blah", fileName: "bleh"}, {type: "std_out"}], "12345");
+
+    expect(loaders).to.be.a('array');
+    expect(loaders[0]).to.be.a('S3Uploader');
+    expect(loaders[0].bucketName).to.equal("blah");
+    expect(loaders[0].fileName).to.equal("bleh");
+    expect(loaders[1]).to.be.a('StdOut');
   });
 
   it("should return instance of ETVL Job Run", () => {
     let config = {
       name: "awesomejob",
-      extract: {
+      extract: [{
         url: "http://extract.from.com/feed",
         type: "http_json",
         headers: {}
-      },
-      transform: {
+      }],
+      transform: [{
         type: "custom"
-      },
+      }],
       validate: {
         type: "xsd",
         schema: "schema.xsd"
       },
-      load: {
+      load: [{
         type: "s3",
         bucketName: "plasticBucket",
         fileName: "water",
         credentials: { secret:"secretString", key: "keyString" }
-      }
+      }]
     };
 
     let etlJobRun = DI.ETLJobRun.instance(config, "12345");
 
-    expect(etlJobRun.extractor).to.be.a('HTTPJSONSource');
+    expect(etlJobRun.extractors).to.be.a('array');
+    expect(etlJobRun.extractors[0]).to.be.a('HTTPJSONSource');
     expect(etlJobRun.transformers).to.be.a('array');
     expect(etlJobRun.transformers[0]).to.be.a('CustomTransformer');
     expect(etlJobRun.validator).to.be.a('XSDValidator');
-    expect(etlJobRun.loader).to.be.a('S3Uploader');
+    expect(etlJobRun.loaders).to.be.a('array');
+    expect(etlJobRun.loaders[0]).to.be.a('S3Uploader');
   });
 
-  it("should return instance of ETVL Job Run with Multiple Transformers", () => {
+  it("should return instance of ETVL Job Run with Multiple Extractors, Transformers and Loaders", () => {
     let config = {
       name: "awesomejob",
-      extract: {
+      extract: [{
         url: "http://extract.from.com/feed",
         type: "http_json",
-        headers: {}
-      },
-      transform: {
-        type: "xml2js;custom"
-      },
+      }, {
+        type: "input_data",
+        data: "blahblue"
+      }],
+      transform: [{ type: "xml2js" }, {type: "custom"}],
       validate: {
         type: "xsd",
         schema: "schema.xsd"
       },
-      load: {
+      load: [{
         type: "s3",
         bucketName: "plasticBucket",
         fileName: "water",
         credentials: { secret:"secretString", key: "keyString" }
-      }
+      }, {
+        type: "std_out"
+      }]
     };
 
     let etlJobRun = DI.ETLJobRun.instance(config, "12345");
 
-    expect(etlJobRun.extractor).to.be.a('HTTPJSONSource');
+    expect(etlJobRun.extractors).to.be.a('array');
+    expect(etlJobRun.extractors[0]).to.be.a('HTTPJSONSource');
+    expect(etlJobRun.extractors[1]).to.be.a('InputDataSource');
     expect(etlJobRun.transformers).to.be.a('array');
     expect(etlJobRun.transformers[0]).to.be.a('XML2JSTransformer');
     expect(etlJobRun.transformers[1]).to.be.a('CustomTransformer');
     expect(etlJobRun.validator).to.be.a('XSDValidator');
-    expect(etlJobRun.loader).to.be.a('S3Uploader');
+    expect(etlJobRun.loaders).to.be.a('array');
+    expect(etlJobRun.loaders[0]).to.be.a('S3Uploader');
+    expect(etlJobRun.loaders[1]).to.be.a('StdOut');
   });
 })

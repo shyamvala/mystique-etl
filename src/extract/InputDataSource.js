@@ -4,6 +4,7 @@ const AppEvents = require('../AppEvents');
 class InputDataSource {
 
   constructor(config, jobId) {
+    this.name = config.name;
     this.config = config;
     this.jobId = jobId;
     this.logger = logger(`app:extract:${config.type}:job:${jobId}`);
@@ -16,6 +17,10 @@ class InputDataSource {
       AppEvents.emit(AppEvents.INPUT_DATA_EXTRACT_SUCCESSFUL, this.jobId);
       resolve(this.config.data);
     });
+  }
+
+  get [Symbol.toStringTag]() {
+    return 'InputDataSource';
   }
 }
 
