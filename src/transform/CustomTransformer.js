@@ -3,8 +3,8 @@ const AppEvents = require('../AppEvents');
 
 class CustomTransformer {
 
-  constructor(config, jobId, transformFunction) {
-    this.transformFunction = transformFunction;
+  constructor(config, jobId) {
+    this.transformFunction = config.transformFunction;
     this.jobId = jobId;
     this.logger = logger(`app:transform:custom:job:${jobId}`);
   }

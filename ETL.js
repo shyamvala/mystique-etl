@@ -17,16 +17,6 @@ class ETL {
     return this;
   }
 
-  validateTransformFunction(transformFunction) {
-    return true;
-  }
-
-  withTransformFunction(transformFunction) {
-    this.validateTransformFunction(transformFunction);
-    this.transformFunction = transformFunction;
-    return this;
-  }
-
   withETLLifeCycleEventListener(lifeCycleListener) {
     this.lifeCycleListener = lifeCycleListener;
     return this;
@@ -34,7 +24,7 @@ class ETL {
 
   run() {
     AppEvents.registerEventsToLifeCycleListener(this.lifeCycleListener);
-    return DI.ETLJobRun.instance(this.jobConfig, this.jobName, this.transformFunction).run();
+    return DI.ETLJobRun.instance(this.jobConfig, this.jobName).run();
   }
 
 }

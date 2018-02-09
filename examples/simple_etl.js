@@ -6,7 +6,7 @@ const SimpleJobConfig = {
     type: "input_data",
     data: "Some Input Data"
   }],
-  transform: [{ type: "no_op" }],
+  transform: [{ type: "custom", transformFunction: require('./simpleEtlTransformFunction')}],
   validate: { type: "no_op" },
   load: [{ type: "std_out" }]
 };

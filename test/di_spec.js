@@ -25,7 +25,7 @@ describe("Dependency Injection", () => {
   });
 
   it("should return instance of CustomTransformer", () => {
-    let transformers = DI.Transformers.instance([{type: "custom"}], "12345", "some_function");
+    let transformers = DI.Transformers.instance([{type: "custom", transformFunction: "some_function"}], "12345");
 
     expect(transformers).to.be.a('array');
     expect(transformers[0]).to.be.a('CustomTransformer');
@@ -33,7 +33,7 @@ describe("Dependency Injection", () => {
   });
 
   it("should return multiple transformers when type is comma seperated list of types", () => {
-    let transformers = DI.Transformers.instance([{type: "xml2js"}, {type: "custom"}], "12345", "some_function");
+    let transformers = DI.Transformers.instance([{type: "xml2js"}, {type: "custom", transformFunction: "some_function"}], "12345");
 
     expect(transformers).to.be.a('array');
     expect(transformers[0]).to.be.a("XML2JSTransformer");
@@ -75,7 +75,8 @@ describe("Dependency Injection", () => {
         headers: {}
       }],
       transform: [{
-        type: "custom"
+        type: "custom",
+        tranformFunction: (data, successCb, errorCb) => {}
       }],
       validate: {
         type: "xsd",
@@ -104,13 +105,15 @@ describe("Dependency Injection", () => {
     let config = {
       name: "awesomejob",
       extract: [{
+        name: "xmldata",
         url: "http://extract.from.com/feed",
-        type: "http_json",
+        type: "http_xml",
       }, {
+        name: "inputdata",
         type: "input_data",
         data: "blahblue"
       }],
-      transform: [{ type: "xml2js" }, {type: "custom"}],
+      transform: [{ type: "xml2js", element: "xmldata" }, {type: "custom", transformFunction: (data, successCb, errorCb) => {}}],
       validate: {
         type: "xsd",
         schema: "schema.xsd"
@@ -128,7 +131,7 @@ describe("Dependency Injection", () => {
     let etlJobRun = DI.ETLJobRun.instance(config, "12345");
 
     expect(etlJobRun.extractors).to.be.a('array');
-    expect(etlJobRun.extractors[0]).to.be.a('HTTPJSONSource');
+    expect(etlJobRun.extractors[0]).to.be.a('HTTPXMLSource');
     expect(etlJobRun.extractors[1]).to.be.a('InputDataSource');
     expect(etlJobRun.transformers).to.be.a('array');
     expect(etlJobRun.transformers[0]).to.be.a('XML2JSTransformer');

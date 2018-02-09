@@ -9,10 +9,9 @@ describe("Custom Transform Data", () => {
 
   describe("on success", () => {
     it("should return transformed data", (done) => {
-      let config = { };
       let transformFunction = (data, success, err) => { success("transformed data"); } ;
-
-      new CustomTransformer(config, "12345", transformFunction)
+      let config = { transformFunction: transformFunction };
+      new CustomTransformer(config, "12345")
         .transform("input data")
         .then((transformedData) => {
           expect(transformedData).to.equal("transformed data");
@@ -24,10 +23,10 @@ describe("Custom Transform Data", () => {
     it("should emit successful transformation event", (done) => {
       let eventSpy = sinon.spy();
       AppEvents.on(AppEvents.CUSTOM_TRANSFORM_SUCCESSFUL, eventSpy);
-      let config = { };
       let transformFunction = (data, success, err) => { success("transformed data"); } ;
+      let config = { transformFunction: transformFunction };
 
-      new CustomTransformer(config, "12345", transformFunction)
+      new CustomTransformer(config, "12345")
         .transform("input data")
         .then((transformedData) => {
           expect(eventSpy).to.have.been.calledWith("12345")
@@ -38,12 +37,12 @@ describe("Custom Transform Data", () => {
 
   describe("on failure", () => {
     it("should emit failed transformation event", (done) => {
-      let config = { };
       let transformFunction = (data, success, err) => { err("transform error"); } ;
+      let config = { transformFunction: transformFunction };
       let eventSpy = sinon.spy();
       AppEvents.on(AppEvents.CUSTOM_TRANSFORM_FAILED, eventSpy);
 
-      new CustomTransformer(config, "12345", transformFunction)
+      new CustomTransformer(config, "12345")
         .transform("input data")
         .catch(() => {
           expect(eventSpy).to.have.been.calledWith("12345")

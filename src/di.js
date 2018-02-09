@@ -10,8 +10,8 @@ const Extractors = function(container, configList, jobId) {
   return _.map(configList, (config) => new ExtractorMap[config.type](config, jobId));
 };
 
-const Transformers = function(container, configList, jobId, transformFunction) {
-  return _.map(configList, (config) => new TransformerMap[config.type](config, jobId, transformFunction));
+const Transformers = function(container, configList, jobId) {
+  return _.map(configList, (config) => new TransformerMap[config.type](config, jobId));
 };
 
 const Validator = function(container, config, jobId) {
@@ -23,10 +23,10 @@ const Loaders = function(container, configList, jobId) {
   return _.map(configList, (config) => new LoaderMap[config.type](config, jobId));
 }
 
-const ETLJobRun = function(container, config, jobId, transformFunction) {
+const ETLJobRun = function(container, config, jobId) {
     return new ETLJob()
       .withExtractors(container.Extractors.instance(config.extract, jobId))
-      .withTransformers(container.Transformers.instance(config.transform, jobId, transformFunction))
+      .withTransformers(container.Transformers.instance(config.transform, jobId))
       .withValidator(container.Validator.instance(config.validate, jobId))
       .withLoaders(container.Loaders.instance(config.load, jobId));
 }
