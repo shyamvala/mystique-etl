@@ -6,8 +6,19 @@
   "scripts": {
     "test": "mocha --recursive"
   },
+  "author": "Shyam Vala",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shyamvala/mystique.git"
+  },
+  "keywords": ["ETL", "Extract", "Transform", "Load"],
   "author": "",
-  "license": "ISC",
+  "license": "GPL v3",
+  "bugs": {
+    "url": "https://github.com/shyamvala/mystique/issues"
+  },
+  "homepage": "https://github.com/shyamvala/mystique/issues",
   "dependencies": {
     "aws-sdk": "^2.188.0",
     "bottlejs": "^1.7.0",
