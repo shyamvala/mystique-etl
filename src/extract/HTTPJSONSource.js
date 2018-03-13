@@ -7,6 +7,7 @@ class HTTPJSONSource {
   constructor(config, jobId) {
     this.name = config.name;
     this.url = config.url;
+    this.headers = config.headers || {};
     this.jobId = jobId;
     this.logger = logger(`app:extract:${config.type}:job:${jobId}`);
   }
@@ -16,6 +17,7 @@ class HTTPJSONSource {
     AppEvents.emit(AppEvents.HTTP_JSON_EXTRACT_REQUESTED, this.jobId);
     return request
       .get(this.url)
+      .set(this.headers)
       .then((res) => {
         this.logger(`Fetched Data`);
         AppEvents.emit(AppEvents.HTTP_JSON_EXTRACT_SUCCESSFUL, this.jobId);

@@ -17,7 +17,7 @@ describe('Extract from HTTP XML', () => {
     let getRequestStub = { buffer: () => {
         return {
           type: () => {
-            return Promise.resolve(response);
+            return { set: () => Promise.resolve(response) };
           }
         }
       }
@@ -59,7 +59,7 @@ describe('Extract from HTTP XML', () => {
     let getRequestStub = { buffer: () => {
         return {
           type: () => {
-            return Promise.reject({});
+            return { set: () => Promise.reject({}) };
           }
         }
       }

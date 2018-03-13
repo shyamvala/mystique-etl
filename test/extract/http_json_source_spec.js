@@ -15,7 +15,7 @@ describe('Extract from HTTP', () => {
   describe("on success", () => {
     it("should use the supplied http source url", () => {
       let response = {"body":{"response": true }, "status": 200 };
-      getRequest.returns(Promise.resolve(response));
+      getRequest.returns({set: () => Promise.resolve(response)});
 
       new HTTPJSONSource({type:"http_json", url: "http://extract.from.com/feed"}, "12345").fetch()
 
@@ -24,7 +24,7 @@ describe('Extract from HTTP', () => {
 
     it("should return with JSON object response", (done) => {
       let response = {"body":{"response": true }, "status": 200 };
-      getRequest.returns(Promise.resolve(response));
+      getRequest.returns({set: () => Promise.resolve(response)});
 
       new HTTPJSONSource({type:"http_json", url: "http://extract.from.com/feed"}, "12345")
         .fetch()
@@ -36,7 +36,7 @@ describe('Extract from HTTP', () => {
 
     it("should emit extract successful event for the given job id", (done) => {
       let response = {"body":{"response": true }, "status": 200 };
-      getRequest.returns(Promise.resolve(response));
+      getRequest.returns({set: () => Promise.resolve(response)});
       let eventSpy = sinon.spy();
       AppEvents.on(AppEvents.HTTP_JSON_EXTRACT_SUCCESSFUL, eventSpy);
 
@@ -51,7 +51,7 @@ describe('Extract from HTTP', () => {
 
   describe("on failure", () => {
     it("should emit extract failed event for the given job id on failed fetch", (done) => {
-      getRequest.returns(Promise.reject({}));
+      getRequest.returns({set: () => Promise.reject({})});
       let eventSpy = sinon.spy();
       AppEvents.on(AppEvents.HTTP_JSON_EXTRACT_FAILED, eventSpy);
 
