@@ -21,6 +21,7 @@ class XSDValidator {
           AppEvents.emit(AppEvents.XSD_VALIDATION_FAILED, this.jobId);
           return reject([parseError]);
         }
+        this.logger(data);
         schema.validate(data, (technicalError, validationErrors) => {
           if(technicalError) {
             this.logger(`Validating Data Failed due to a Technical Error`);
