@@ -1,4 +1,5 @@
 const logger = require('debug');
+const _ = require('lodash');
 const AppEvents = require('../AppEvents');
 const AWS = require('aws-sdk');
 
@@ -7,6 +8,7 @@ class S3Uploader {
   constructor(config, jobId) {
     this.bucketName = config.bucketName;
     this.fileName = config.fileName;
+    this.options = config.options || {};
     this.jobId = jobId;
     this.logger = logger(`app:load:s3:job:${jobId}`);
   }
@@ -28,7 +30,7 @@ class S3Uploader {
         reject(err);
       };
 
-      let objectData = { Bucket: this.bucketName, Key: this.fileName, Body: data };
+      let objectData = _.extend({}, this.options, { Bucket: this.bucketName, Key: this.fileName, Body: data });
       s3.putObject(objectData, (err, responseData) => {
         err ? failed(err) : success(data);
       });
