@@ -1,3 +1,4 @@
+const logger = require('debug')('app:etljob');
 const _ = require('lodash');
 
 class ETLJob {
@@ -59,8 +60,8 @@ class ETLJob {
       .then((transformedData) => this.validator.validate(transformedData))
       .then((validatedData) => this.resolveMultipleLoaders(this.loaders,validatedData))
       .catch(error => {
-        console.log(error);
-        return error;
+        logger(error);
+        throw error;
       })
   }
 }
