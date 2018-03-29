@@ -9,6 +9,9 @@ util.inherits(AppEventEmitter, EventEmitter);
 const appEvents = new AppEventEmitter();
 
 //Extract Events
+appEvents.FILE_EXTRACT_REQUESTED = 'file-extract-requested';
+appEvents.FILE_EXTRACT_SUCCESSFUL = 'file-extract-successful';
+appEvents.FILE_EXTRACT_FAILED = 'file-extract-failed';
 appEvents.INPUT_DATA_EXTRACT_REQUESTED = 'input-data-extract-requested';
 appEvents.INPUT_DATA_EXTRACT_SUCCESSFUL = 'input-data-extract-successful';
 appEvents.HTTP_JSON_EXTRACT_REQUESTED = 'http-json-extract-requested';

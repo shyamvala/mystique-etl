@@ -5,6 +5,14 @@ describe("application events", () => {
 
   // Extract Events
 
+  it("should have an event for Extract Requested event for File Data", () => {
+    expect(AppEvents.FILE_EXTRACT_REQUESTED).to.equal('file-extract-requested');
+  });
+
+  it("should have an event for Extract Successful event for File Data", () => {
+    expect(AppEvents.FILE_EXTRACT_SUCCESSFUL).to.equal('file-extract-successful');
+  });
+
   it("should have an event for Extract Requested event for Input Data", () => {
     expect(AppEvents.INPUT_DATA_EXTRACT_REQUESTED).to.equal('input-data-extract-requested');
   });
