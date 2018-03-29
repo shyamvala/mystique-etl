@@ -1,5 +1,5 @@
 # WIP
-# Mystique [![Build Status](https://travis-ci.org/shyamvala/mystique.svg?branch=master)](https://travis-ci.org/shyamvala/mystique)
+# Mystique [![Build Status](https://travis-ci.org/shyamvala/mystique-etl.svg?branch=master)](https://travis-ci.org/shyamvala/mystique-etl)
 
 A simple ETVL - Extract, Transform, Validate and Load tool. Its written in javascript and attempts to provide a simple solution to most common ETL tasks.
 
