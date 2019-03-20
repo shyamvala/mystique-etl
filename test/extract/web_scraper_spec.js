@@ -41,12 +41,5 @@ describe('Extract from a website', () => {
         })
 
     });
-
-    xit("should emit extract successful event for the given job id", (done) => {
-      let inputData = JSON.stringify({"name": "Tyrion", "character": "Smart and Witty"});
-      let eventSpy = sinon.spy();
-      AppEvents.on(AppEvents.INPUT_DATA_EXTRACT_SUCCESSFUL, eventSpy);
-
-    });
   });
 });
