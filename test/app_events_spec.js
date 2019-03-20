@@ -45,6 +45,18 @@ describe("application events", () => {
     expect(AppEvents.HTTP_JSON_EXTRACT_FAILED).to.equal('http-json-extract-failed');
   });
 
+  it("should have an event for Extract Requested event for Webpage", () => {
+    expect(AppEvents.WEBPAGE_EXTRACT_REQUESTED).to.equal('webpage-extract-requested');
+  });
+
+  it("should have an event for Extract Successful event for Webpage", () => {
+    expect(AppEvents.WEBPAGE_EXTRACT_SUCCESSFUL).to.equal('webpage-extract-successful');
+  });
+
+  it("should have an event for Extract Failed event for Webpage", () => {
+    expect(AppEvents.WEBPAGE_EXTRACT_FAILED).to.equal('webpage-extract-failed');
+  });
+
   //Transform Events
 
   it("should have an event for Requested No Op Transform event", () => {

@@ -20,8 +20,8 @@ appEvents.HTTP_JSON_EXTRACT_FAILED = 'http-json-extract-failed';
 appEvents.HTTP_XML_EXTRACT_REQUESTED = 'http-xml-extract-requested';
 appEvents.HTTP_XML_EXTRACT_SUCCESSFUL = 'http-xml-extract-successful';
 appEvents.HTTP_XML_EXTRACT_FAILED = 'http-xml-extract-failed';
-appEvents.WEBPAGE_EXTRACT_REQUESTED = 'webpage-extract-failed';
-appEvents.WEBPAGE_EXTRACT_SUCCESSFUL = 'webpage-extract-failed';
+appEvents.WEBPAGE_EXTRACT_REQUESTED = 'webpage-extract-requested';
+appEvents.WEBPAGE_EXTRACT_SUCCESSFUL = 'webpage-extract-successful';
 appEvents.WEBPAGE_EXTRACT_FAILED = 'webpage-extract-failed';
 
 //Transform Events
