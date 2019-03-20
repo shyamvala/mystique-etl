@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "A simple ETVL - Extract, Transform, Validate and Load tool. It attempts to provide a simple solution to most common ETL tasks.",
   "main": "index.js",
+  "config": {
+    "engine-strict": true
+  },
+  "engines": {
+    "node": ">=8.2.1 <=8.15.1"
+  },
   "scripts": {
     "test": "mocha --recursive"
   },
@@ -30,6 +36,7 @@
     "events": "^2.0.0",
     "libxml-xsd": "^0.5.2",
     "lodash": "^4.17.4",
+    "nightmare": "^3.0.1",
     "path": "^0.12.7",
     "pm2": "^2.9.3",
     "superagent": "^3.8.2",
